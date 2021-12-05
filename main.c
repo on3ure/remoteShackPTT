@@ -54,11 +54,12 @@ void route() {
   }
   
   GET("/out/delayed") {
-    gpio_write(18,1);
-    sleep(5);
-    gpio_write(18,0);
-
     HTTP_200;
+      printf("{\"state\":1}\n");
+      gpio_write(18,1);
+      sleep(5);
+      gpio_write(18,0);
+
       printf("{\"state\":0}\n\n");
   }
 
