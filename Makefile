@@ -5,7 +5,7 @@ clean:
 	@rm -rf server
 
 server: main.o httpd.o gpiolib.o
-	gcc -o server $^
+	gcc -o rs-server $^
 
 main.o: main.c httpd.h gpiolib.h
 	gcc -c -o main.o main.c
