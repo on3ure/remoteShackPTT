@@ -88,9 +88,9 @@ int main(int argc, char *argv[])
   while (1)
   {
 
-    printf(">> GPIO %d ON\n", curr_state);
     if (curr_state != state)
     {
+      printf(">> GPIO %d ON\n", curr_state);
       curl = curl_easy_init();
       if (curl)
       {
