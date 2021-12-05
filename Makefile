@@ -5,10 +5,10 @@ clean:
 	@rm -rf server watchinput
 
 input: input.o gpiolib.o
-	gcc -o rs-input $^
+	gcc -o rs-input $^ -lcurl
 
 input.o: input.c gpiolib.h
-	gcc -c -o input.o input.c
+	gcc -c -o input.o input.c -lcurl
 
 server: main.o httpd.o gpiolib.o
 	gcc -o rs-server $^
