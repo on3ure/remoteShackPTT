@@ -54,22 +54,6 @@ void route() {
       printf("{\"state\":%i}\n\n", state);
   }
   
-  GET("/out/on") {
-    gpio_write(18,1);
-    int state = gpio_read(18);
-
-    HTTP_200;
-      printf("{\"state\":%i}\n\n", state);
-  }
-  
-  GET("/out/off") {
-    gpio_write(18,0);
-    int state = gpio_read(18);
-
-    HTTP_200;
-      printf("{\"state\":%i}\n\n", state);
-  }
-
   GET("/out/toggle") {
     int toggle = 0;
     if (gpio_read(18) != 1) {
@@ -105,6 +89,23 @@ void route() {
 
       printf("{\"state\":0}\n\n");
   }
+  
+  GET("/out/on") {
+    gpio_write(18,1);
+    int state = gpio_read(18);
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", state);
+  }
+  
+  GET("/out/off") {
+    gpio_write(18,0);
+    int state = gpio_read(18);
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", state);
+  }
+
 
   ROUTE_END()
 }
