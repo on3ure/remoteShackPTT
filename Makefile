@@ -2,7 +2,10 @@ all: server
 
 clean:
 	@rm -rf *.o
-	@rm -rf server
+	@rm -rf server watchinput
+
+watchinput: watchinput.o gpiolib.o
+	gcc -o watchinput $^
 
 server: main.o httpd.o gpiolib.o
 	gcc -o rs-server $^
