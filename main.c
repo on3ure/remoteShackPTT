@@ -7,10 +7,6 @@
 
 #define CHUNK_SIZE 1024 // read 1024 bytes at a time
 
-// Public directory settings
-#define PUBLIC_DIR "./public"
-#define NOT_FOUND_HTML "/404.html"
-
 int init_gpio() {
   gpio_export(18);
   gpio_export(26);
@@ -35,51 +31,35 @@ int main(int c, char **v) {
   return 0;
 }
 
-int file_exists(const char *file_name) {
-  struct stat buffer;
-  int exists;
-
-  exists = (stat(file_name, &buffer) == 0);
-
-  return exists;
-}
-
-int read_file(const char *file_name) {
-  char buf[CHUNK_SIZE];
-  FILE *file;
-  size_t nread;
-  int err = 1;
-
-  file = fopen(file_name, "r");
-
-  if (file) {
-    while ((nread = fread(buf, 1, sizeof buf, file)) > 0)
-      fwrite(buf, 1, nread, stdout);
-
-    err = ferror(file);
-    fclose(file);
-  }
-  return err;
-}
-
 void route() {
   ROUTE_START()
 
   GET("/") {
     HTTP_200;
-      printf("Hello! You are using %s\n\n", request_header("User-Agent"));
+      printf("Hello! /in for input state /out/toggle to toggle output state\n\n");
   }
 
-  GET("/out") {
-    HTTP_200;
-    printf("List of request headers:\n\n");
-
-    header_t *h = request_headers();
-
-    while (h->name) {
-      printf("%s: %s\n", h->name, h->value);
-      h++;
+  GET("/out/toggle") {
+    int toggle = 0;
+    if (gpio_read(18) != 1) {
+      gpio_write(18,1);
+      toggle = 1;
+    } else {
+      gpio_write(18,0);
+      toggle = 0;
     }
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", toggle);
+  }
+  
+  GET("/out/delayed") {
+    gpio_write(18,1);
+    sleep(5);
+    gpio_write(18,0);
+
+    HTTP_200;
+      printf("{\"state\":0}\n\n");
   }
 
   ROUTE_END()
