@@ -7,6 +7,8 @@ clean:
 input: input.o gpiolib.o
 	gcc -o rs-input $^
 
+input.o: input.c gpiolib.h
+
 server: main.o httpd.o gpiolib.o
 	gcc -o rs-server $^
 
