@@ -55,7 +55,7 @@ void route() {
   
   GET("/out/delayed") {
     HTTP_200;
-      printf("%s\n", qs);
+      printf("{\"delay\":%s}\n", qs);
       printf("{\"state\":1}\n");
       gpio_write(18,1);
       sleep(atoi(qs));
