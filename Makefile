@@ -8,6 +8,7 @@ input: input.o gpiolib.o
 	gcc -o rs-input $^
 
 input.o: input.c gpiolib.h
+	gcc -c -o input.o input.c
 
 server: main.o httpd.o gpiolib.o
 	gcc -o rs-server $^
