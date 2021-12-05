@@ -120,6 +120,5 @@ void route()
     printf("{\"state\":%i}\n\n", state);
   }
 
-
   ROUTE_END()
 }

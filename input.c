@@ -5,6 +5,7 @@
 #include <getopt.h>
 #include <curl/curl.h>
 
+/* own a2i */
 int a2i(const char *s)
 {
   int sign = 1;
@@ -32,15 +33,14 @@ int main(int argc, char *argv[])
   CURL *curl;
   CURLcode res;
 
-
   while (1)
   {
     int option_index = 0;
     static struct option long_options[] =
     {
-      {"url",     required_argument, NULL,  'u'},
+      {"url",    required_argument, NULL,  'u'},
       {"state",  required_argument, NULL,  's'},
-      {NULL,      0,                 NULL,    0}
+      {NULL,     0,                 NULL,    0}
     };
 
     int c = getopt_long(argc, argv, "-:a:d", long_options, &option_index);
@@ -49,14 +49,14 @@ int main(int argc, char *argv[])
 
     switch (c)
     {
+    /* url="http://whatever" opt */
     case 'u':
       url = optarg;
-      //printf("option a with value '%s'\n", optarg);
       break;
 
+    /* state="0|1" ... default open/default close */
     case 's':
       state = a2i(optarg);
-      //printf("option s with value '%i'\n", a2i(optarg));
       break;
 
     case '?':
@@ -68,11 +68,12 @@ int main(int argc, char *argv[])
       break;
 
     default:
-      printf("?? getopt returned character code 0%o ??\n", c);
+      printf("--url=\"http://whatever.com\"  --state=\"0|1\"\n");
       return 1;
     }
   }
 
+  /* init gpio */
   int gpio_pin = 26;
 
   gpio_export(gpio_pin);
@@ -95,7 +96,7 @@ int main(int argc, char *argv[])
       if (curl)
       {
         curl_easy_setopt(curl, CURLOPT_URL, url);
-        /* example.com is redirected, so we tell libcurl to follow redirection */
+        /* we tell libcurl to follow redirection */
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
         /* Perform the request, res will get the return code */
@@ -110,7 +111,10 @@ int main(int argc, char *argv[])
       }
     }
 
-    usleep(1000);
+    /* sleep 10ms */
+    usleep(10000);
+
+    /* update current state */
     curr_state = gpio_read(26);
   }
 
