@@ -14,12 +14,6 @@ int init_gpio() {
   gpio_direction(18,1);
   gpio_direction(26,0);
 
-  gpio_write(18,1);
-
-  sleep(2);
-  
-  gpio_write(18,0);
-
   return 1;
 }
 
@@ -37,6 +31,20 @@ void route() {
   GET("/") {
     HTTP_200;
       printf("Hello! /in for input state /out/toggle to toggle output state\n\n");
+  }
+  
+  GET("/in") {
+    int state = gpio_read(26);
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", state);
+  }
+  
+  GET("/out") {
+    int state = gpio_read(18);
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", state);
   }
 
   GET("/out/toggle") {
