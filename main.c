@@ -30,7 +30,14 @@ void route() {
 
   GET("/") {
     HTTP_200;
-      printf("Hello! /in for input state /out/toggle to toggle output state\n\n");
+      printf("RemoteShackPTT: ure@on3ure.be\n");
+      printf("/in -> input state\n");
+      printf("/out -> output state\n");
+      printf("/out/on -> on state\n");
+      printf("/out/off -> off state\n");
+      printf("/out/toggle -> toggle output state\n");
+      printf("/out/on/delayed?time -> toggle on delayed <time>\n");
+      printf("/out/off/delayed?time -> toggle on delayed <time>\n");
   }
   
   GET("/in") {
@@ -41,6 +48,22 @@ void route() {
   }
   
   GET("/out") {
+    int state = gpio_read(18);
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", state);
+  }
+  
+  GET("/out/on") {
+    gpio_write(18,1);
+    int state = gpio_read(18);
+
+    HTTP_200;
+      printf("{\"state\":%i}\n\n", state);
+  }
+  
+  GET("/out/off") {
+    gpio_write(18,0);
     int state = gpio_read(18);
 
     HTTP_200;
@@ -61,13 +84,24 @@ void route() {
       printf("{\"state\":%i}\n\n", toggle);
   }
   
-  GET("/out/delayed") {
+  GET("/out/on/delayed") {
     HTTP_200;
       printf("{\"delay\":%s}\n", qs);
       printf("{\"state\":1}\n");
       gpio_write(18,1);
       sleep(atoi(qs));
       gpio_write(18,0);
+
+      printf("{\"state\":0}\n\n");
+  }
+  
+  GET("/out/off/delayed") {
+    HTTP_200;
+      printf("{\"delay\":%s}\n", qs);
+      printf("{\"state\":1}\n");
+      gpio_write(18,0);
+      sleep(atoi(qs));
+      gpio_write(18,1);
 
       printf("{\"state\":0}\n\n");
   }
