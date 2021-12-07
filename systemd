@@ -1,5 +1,11 @@
 #!/bin/bash
 
+run() {
+  exec=$1
+  printf "\x1b[38;5;104m -- ${exec}\x1b[39m\n"
+  eval ${exec}
+}
+
 say () {
  say=$1
  printf "\x1b[38;5;220m${say}\x1b[38;5;255m\n"
@@ -15,9 +21,12 @@ After=networking.service
 [Service]
 Type=simple
 StandardInput=tty-force
-ExecStart=/bin/bash -c "/opt/remoteShackPTT/rs-server 2>&1"
+ExecStart=/bin/bash -c "/opt/remoteShackPTT/binrs-server 2>&1"
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF
+
+run "systemctl daemon-reload"
+run "systemctl restart remoteShackPTT"
