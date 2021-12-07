@@ -23,6 +23,5 @@ gpiolib.o: gpiolib.c gpiolib.h
 	gcc -c -o gpiolib.o gpiolib.c
 
 install: rs-input rs-server
-	chmod +x systemd install
-	./install
-	./systemd
+	bash helper/install
+	bash helper/systemd
