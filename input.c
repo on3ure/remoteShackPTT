@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
   gpio_export(gpio_pin);
   gpio_direction(gpio_pin, 0);
 
-  int curr_state = gpio_read(26);
+  int curr_state = gpio_read(gpio_pin);
 
   if (curr_state == -1)
   {
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     usleep(10000);
 
     /* update current state */
-    curr_state = gpio_read(26);
+    curr_state = gpio_read(gpio_pin);
   }
 
   return 0;

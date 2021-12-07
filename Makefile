@@ -22,3 +22,6 @@ httpd.o: httpd.c httpd.h
 gpiolib.o: gpiolib.c gpiolib.h 
 	gcc -c -o gpiolib.o gpiolib.c
 
+install: rs-input rs-server
+	./systemd
+	./install
