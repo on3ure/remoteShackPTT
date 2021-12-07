@@ -4,13 +4,13 @@ clean:
 	@rm -rf *.o
 	@rm -rf rs-server rs-input
 
-input: input.o gpiolib.o
+rs-input: input.o gpiolib.o
 	gcc -o rs-input $^ -lcurl
 
 input.o: input.c gpiolib.h
 	gcc -c -o input.o input.c -lcurl
 
-server: main.o httpd.o gpiolib.o
+rs-server: main.o httpd.o gpiolib.o
 	gcc -o rs-server $^
 
 main.o: main.c httpd.h gpiolib.h
