@@ -13,7 +13,7 @@ say () {
 
 say "Install rs-server"
 run "mkdir -p /opt/remoteShackPTT/bin"
-run "cp rs-input /opt/remoteShackPTT/bin && chmod +x /opt/remoteShackPTT/bin/rs-input"
+run "cp rs-server /opt/remoteShackPTT/bin && chmod +x /opt/remoteShackPTT/bin/rs-server"
 
 say "Install rs-client"
 run "cp rs-input /opt/remoteShackPTT/bin && chmod +x /opt/remoteShackPTT/bin/rs-input"
