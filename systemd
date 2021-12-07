@@ -21,7 +21,7 @@ After=networking.service
 [Service]
 Type=simple
 StandardInput=tty-force
-ExecStart=/bin/bash -c "/opt/remoteShackPTT/binrs-server 2>&1"
+ExecStart=/bin/bash -c "/opt/remoteShackPTT/bin/rs-server 2>&1"
 Restart=always
 
 [Install]
