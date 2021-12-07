@@ -2,7 +2,7 @@ all: server input
 
 clean:
 	@rm -rf *.o
-	@rm -rf server watchinput
+	@rm -rf rs-server rs-input
 
 input: input.o gpiolib.o
 	gcc -o rs-input $^ -lcurl
