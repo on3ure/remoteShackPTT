@@ -1,4 +1,4 @@
-all: server input
+all: rs-server rs-input
 
 clean:
 	@rm -rf *.o
